@@ -1,4 +1,4 @@
-package com.configurationpc.PCConfigurator.models;
+package com.configurationpc.PCConfigurator.models.components;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Components")
+@Table(name = "components")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "category")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,16 +22,7 @@ public class Components {
     private String name;
 
     @Column(nullable = false)
-    private String category;
-
-    @Column(nullable = false)
-    private Integer socket;
-
-    @Column(nullable = false)
-    private Integer energy;
-
-    @Column(nullable = false)
-    private Integer price;
+    private Double price;
 
 
 }
