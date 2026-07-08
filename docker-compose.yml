@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: pc_configurator_db
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: pc_configurator
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dimash666
+    ports:
+      - "5432:5432"                        # Пробрасываем порт для Spring Boot и pgAdmin
+    volumes:
+      - pgdata:/var/lib/postgresql/data    # Чтобы данные не стирались при перезапуске
+
+  # Веб-интерфейс для управления базой
+  adminer:
+    image: adminer:latest
+    container_name: pc_configurator_adminer
+    restart: always
+    ports:
+      - "8080:8080"                        # Будет доступен в браузере по адресу http://localhost:8080
+
+# Объявляем постоянное хранилище для базы данных
+volumes:
+  pgdata:
