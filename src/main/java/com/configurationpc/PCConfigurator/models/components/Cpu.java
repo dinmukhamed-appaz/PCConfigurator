@@ -19,4 +19,5 @@ public class Cpu extends Components {
 
     @Column(nullable = false)
     private Integer powerConsumption;
+
 }

@@ -19,9 +19,6 @@ public class Ram extends Components {
     private int capacity;
 
     @Column(nullable = false)
-    private String type;
-
-    @Column(nullable = false)
     private int speed;
 
 }

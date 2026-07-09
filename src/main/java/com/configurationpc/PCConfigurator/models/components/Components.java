@@ -16,13 +16,12 @@ public class Components {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private Double price;
-
 
 }
