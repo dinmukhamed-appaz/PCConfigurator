@@ -18,5 +18,10 @@ public class Gpu extends Components {
     @Column(nullable = false)
     private Integer powerConsumption;
 
+    @Column(nullable = false)
+    private String powerConnectors;
+
+    @Column(nullable = false)
+    private int lengthGpu;
 
 }

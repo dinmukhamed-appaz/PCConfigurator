@@ -18,6 +18,6 @@ public class Cpu extends Components {
     private String socket;
 
     @Column(nullable = false)
-    private Integer powerConsumption;
+    private Integer tdp;
 
 }

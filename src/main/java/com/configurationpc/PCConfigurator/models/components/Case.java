@@ -18,4 +18,10 @@ public class Case extends Components {
 
     @Column(nullable = false)
     private String supportedFormFactors;
+
+    @Column(nullable = false)
+    private int maxGpuLength;
+
+    @Column(nullable = false)
+    private int maxCoolerHeight;
 }

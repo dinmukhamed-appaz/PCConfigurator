@@ -18,4 +18,9 @@ public class Cooler extends Components {
     @Column(nullable = false)
     private String supportedSockets;
 
+    @Column(nullable = false)
+    private int maxTdp;
+
+    @Column(nullable = false)
+    private int heightCooler;
 }

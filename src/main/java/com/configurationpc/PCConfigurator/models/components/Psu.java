@@ -15,5 +15,8 @@ import lombok.NoArgsConstructor;
 public class Psu extends Components {
 
     @Column(nullable = false)
-    private Integer wattageCapacity;
+    private Integer totalPower;
+
+    @Column(nullable = false)
+    private String availableConnectors;
 }

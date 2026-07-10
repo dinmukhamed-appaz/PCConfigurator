@@ -16,9 +16,9 @@ import lombok.NoArgsConstructor;
 public class Ram extends Components {
 
     @Column(nullable = false)
-    private int capacity;
+    private int memory;
 
     @Column(nullable = false)
-    private int speed;
+    private String typeRam;
 
 }

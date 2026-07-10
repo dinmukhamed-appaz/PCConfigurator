@@ -18,5 +18,8 @@ public class Motherboard extends Components {
     private String socket;
 
     @Column(nullable = false)
+    private String ramType;
+
+    @Column(nullable = false)
     private String formFactor ;
 }
