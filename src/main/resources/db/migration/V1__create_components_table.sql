@@ -14,7 +14,8 @@ create table cpu(
     id int not null,
 
     socket varchar(50) not null ,
-    power_consumption int not null,
+
+    tdp int not null,
 
     primary key (id),
 
@@ -28,6 +29,10 @@ create table pc_case(
 
     supported_form_factors varchar(50) not null,
 
+    max_gpu_length int not null ,
+
+    max_cooler_height int  not null,
+
     primary key (id),
 
     foreign key (id) references components(id) ON DELETE CASCADE
@@ -39,6 +44,10 @@ create table gpu(
     id int not null,
 
     power_consumption int not null,
+
+    power_connectors varchar(50) not null,
+
+    length_gpu int not null,
 
     primary key (id),
 
@@ -52,6 +61,9 @@ create table motherboard(
     id int not null,
 
     socket varchar(50) not null,
+
+    ram_type varchar not null,
+
     form_factor varchar(50) not null,
 
     primary key (id),
@@ -66,6 +78,10 @@ create table cooler(
 
     supported_sockets varchar(50) not null,
 
+    max_tdp int not null,
+
+    height_cooler int not null,
+
     primary key (id),
 
     foreign key (id) references components(id) ON DELETE CASCADE
@@ -76,8 +92,9 @@ create table ram(
 
     id int not null,
 
-    capacity int not null,
-    speed int not null,
+    memory int not null,
+
+    type_ram varchar(50) not null,
 
     primary key (id),
 
@@ -89,7 +106,9 @@ create table psu(
 
     id int not null,
 
-    wattage_capacity int not null,
+    total_power int not null,
+
+    available_connectors varchar(50) not null,
 
     primary key (id),
 

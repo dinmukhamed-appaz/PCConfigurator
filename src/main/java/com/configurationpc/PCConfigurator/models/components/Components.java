@@ -1,5 +1,6 @@
 package com.configurationpc.PCConfigurator.models.components;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +24,10 @@ public class Components {
 
     @Column(nullable = false)
     private Double price;
+
+    @JsonProperty("category")
+    public String getCategory() {
+        return getClass().getSimpleName();
+    }
 
 }
