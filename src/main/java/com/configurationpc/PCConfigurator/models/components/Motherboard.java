@@ -23,3 +23,4 @@ public class Motherboard extends Components {
     @Column(nullable = false)
     private String formFactor ;
 }
+

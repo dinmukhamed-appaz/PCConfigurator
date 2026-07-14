@@ -1,11 +1,9 @@
 package com.configurationpc.PCConfigurator.Serivices;
 
-import com.configurationpc.PCConfigurator.models.components.Components;
-import com.configurationpc.PCConfigurator.models.components.Cooler;
-import com.configurationpc.PCConfigurator.models.components.Cpu;
-import com.configurationpc.PCConfigurator.models.components.Motherboard;
+import com.configurationpc.PCConfigurator.models.components.*;
 import com.configurationpc.PCConfigurator.repositories.BuildRepository;
 import com.configurationpc.PCConfigurator.repositories.ComponentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,18 +12,12 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class CheckerService {
 
-    @Autowired
-    private ComponentRepository componentRepository;
+    private final ComponentRepository componentRepository;
 
-    @Autowired
-    private BuildRepository buildRepository;
-
-    public CheckerService(ComponentRepository componentRepository, BuildRepository buildRepository) {
-        this.componentRepository = componentRepository;
-        this.buildRepository = buildRepository;
-    }
+    private final BuildRepository buildRepository;
 
 
     public List<String> check(List<Components> components) {
@@ -35,24 +27,22 @@ public class CheckerService {
             issues.add("No component found");
         }
 
-        Cpu cpu = null;
-        Motherboard motherboard = null;
-        Cooler cooler = null;
+        Cpu cpu = find(components, Cpu.class);
+        Gpu gpu = find(components, Gpu.class);
+        Psu psu = find(components, Psu.class);
+        Ram ram = find(components, Ram.class);
+        Motherboard motherboard = find(components, Motherboard.class);
+        Cooler cooler = find(components, Cooler.class);
+        Case casefing = find(components, Case.class);
 
-
-        for (Components comp : components) {
-            if (comp instanceof Cpu) {
-                cpu = (Cpu) comp;
-            } else if (comp instanceof Motherboard) {
-                motherboard = (Motherboard) comp;
-            } else if (comp instanceof Cooler) {
-                cooler = (Cooler) comp;
-            }
-        }
 
         if (cpu != null && motherboard != null ) {
+
+            String cpuSocket = cpu.getSocket();
+            String motherboardSocket = motherboard.getSocket();
+
             try{
-                if(!cpu.getSocket().equalsIgnoreCase(motherboard.getSocket())){
+                if(!cpuSocket.contains(motherboardSocket)) {
                     issues.add("Cpu socket and motherboard socket are different");
                 }
             }
@@ -62,9 +52,13 @@ public class CheckerService {
         }
 
         if (cpu != null && motherboard != null && cooler != null) {
+            String cpuSocket = cpu.getSocket();
+            String motherboardSocket = motherboard.getSocket();
+            String coolerSocket = cooler.getSupportedSockets();
+
             try {
-                if (!cooler.getSupportedSockets().equalsIgnoreCase(motherboard.getSocket())
-                        || !cooler.getSupportedSockets().equalsIgnoreCase(cpu.getSocket())) {
+                if (!coolerSocket.contains(motherboardSocket)
+                        || !coolerSocket.contains(cpuSocket)) {
                     issues.add("Sockets does not match");
                 }
             }
@@ -75,7 +69,19 @@ public class CheckerService {
 
 
 
+
         return issues;
 
     }
+
+
+    private <T extends Components> T find(List<Components> components, Class<T> type) {
+        for (Components component : components) {
+            if(type.isInstance(component)){
+                return (T) component;
+            }
+        }
+        return null;
+    }
+
 }

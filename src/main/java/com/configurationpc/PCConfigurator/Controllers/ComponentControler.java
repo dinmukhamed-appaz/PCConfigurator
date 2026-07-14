@@ -17,49 +17,48 @@ public class ComponentControler {
 
     @PostMapping("/cpu")
     public Cpu createComponent(@RequestBody Cpu cpu) {
-        Cpu created = componentsService.createComponent(cpu);
-        return created;
+        return componentsService.createComponent(cpu);
     }
 
     @PostMapping("/motherboard")
     public Motherboard createComponent(@RequestBody Motherboard motherboard) {
-        Motherboard created = componentsService.createComponent(motherboard);
-        return created;
+        return componentsService.createComponent(motherboard);
     }
 
     @PostMapping("/gpu")
     public Gpu createComponent(@RequestBody Gpu gpu) {
-        Gpu created = componentsService.createComponent(gpu);
-        return created;
+        return componentsService.createComponent(gpu);
     }
 
     @PostMapping("/psu")
     public Psu createComponent(@RequestBody Psu psu) {
-        Psu created = componentsService.createComponent(psu);
-        return created;
+        return componentsService.createComponent(psu);
     }
 
     @PostMapping("/ram")
     public Ram createComponent(@RequestBody Ram ram) {
-        Ram created = componentsService.createComponent(ram);
-        return created;
+        return componentsService.createComponent(ram);
     }
 
     @PostMapping("/cooler")
     public Cooler createComponent(@RequestBody Cooler cooler) {
-        Cooler created = componentsService.createComponent(cooler);
-        return created;
+        return componentsService.createComponent(cooler);
     }
 
     @PostMapping("/case")
     public Case createComponent(@RequestBody Case cases) {
-        Case created = componentsService.createComponent(cases);
-        return created;
+        return componentsService.createComponent(cases);
     }
 
     @GetMapping("")
-    public List<Components> showComponets(Components components) {
-        return componentsService.showComponents(components);
+    public List<Components> showComponets() {
+        return componentsService.showComponents();
     }
+
+    @GetMapping("/{id}")
+    public Components showComponentsById(@PathVariable int id){
+        return componentsService.showComponentsById(id);
+    }
+
 
 }

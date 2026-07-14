@@ -4,22 +4,22 @@ import com.configurationpc.PCConfigurator.models.Build;
 import com.configurationpc.PCConfigurator.models.components.Components;
 import com.configurationpc.PCConfigurator.repositories.BuildRepository;
 import com.configurationpc.PCConfigurator.repositories.ComponentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
+
 public class BuildService {
 
-    @Autowired
-    private ComponentRepository componentRepository;
+    private final ComponentRepository componentRepository;
 
-    @Autowired
-    private BuildRepository buildRepository;
+    private final BuildRepository buildRepository;
 
-    @Autowired
-    private CheckerService checkerService;
+    private final CheckerService checkerService;
 
 
     public Build createBuild(List<Integer> componentIds) {

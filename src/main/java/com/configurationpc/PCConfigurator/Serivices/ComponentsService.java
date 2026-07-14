@@ -1,19 +1,18 @@
 package com.configurationpc.PCConfigurator.Serivices;
 
-
 import com.configurationpc.PCConfigurator.models.components.*;
 import com.configurationpc.PCConfigurator.repositories.ComponentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class ComponentsService {
 
-    @Autowired
-    private ComponentRepository componentRepository;
+    private final ComponentRepository componentRepository;
 
     public Cpu createComponent(Cpu cpu) {
         return componentRepository.save(cpu);
@@ -43,8 +42,12 @@ public class ComponentsService {
         return componentRepository.save(motherboard);
     }
 
-    public List<Components> showComponents(Components components) {
+    public List<Components> showComponents() {
         return componentRepository.findAll();
+    }
+
+    public Components showComponentsById(int id) {
+        return componentRepository.findById(id).orElse(null);
     }
 
 
