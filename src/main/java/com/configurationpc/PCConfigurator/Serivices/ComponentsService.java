@@ -1,5 +1,6 @@
 package com.configurationpc.PCConfigurator.Serivices;
 
+import com.configurationpc.PCConfigurator.exceptions.NotFoundException;
 import com.configurationpc.PCConfigurator.models.components.*;
 import com.configurationpc.PCConfigurator.repositories.ComponentRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,9 @@ public class ComponentsService {
     }
 
     public Components showComponentsById(int id) {
-        return componentRepository.findById(id).orElse(null);
+        return componentRepository.findById(id)
+                .orElseThrow(() ->
+                        new NotFoundException("Component",id));
     }
 
 

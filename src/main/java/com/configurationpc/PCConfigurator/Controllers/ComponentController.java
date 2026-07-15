@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/components")
-public class ComponentControler {
+public class ComponentController {
 
     @Autowired
     private ComponentsService componentsService;
@@ -51,7 +51,7 @@ public class ComponentControler {
     }
 
     @GetMapping("")
-    public List<Components> showComponets() {
+    public List<Components> showComponents() {
         return componentsService.showComponents();
     }
 

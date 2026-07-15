@@ -24,4 +24,5 @@ public class Gpu extends Components {
     @Column(nullable = false)
     private int lengthGpu;
 
+
 }
