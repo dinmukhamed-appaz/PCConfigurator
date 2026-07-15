@@ -1,5 +1,6 @@
 package com.configurationpc.PCConfigurator.Serivices;
 
+import com.configurationpc.PCConfigurator.exceptions.IncompatibilityIssuesException;
 import com.configurationpc.PCConfigurator.exceptions.NotFoundException;
 import com.configurationpc.PCConfigurator.models.Build;
 import com.configurationpc.PCConfigurator.models.components.Components;
@@ -31,12 +32,16 @@ public class BuildService {
 
         List<String> issues = checkerService.check(components);
 
+        if(!issues.isEmpty()) {
+            throw new IncompatibilityIssuesException(issues);
+        }
+
         Build build = new Build();
         build.setComponents(components);
 
         build.setTotalPrice(checkerService.totalPrice(components));
 
-        build.setStatus(issues.isEmpty());
+        build.setStatus(true);
 
 
         return buildRepository.save(build);

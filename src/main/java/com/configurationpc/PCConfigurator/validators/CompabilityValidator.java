@@ -1,11 +1,9 @@
 package com.configurationpc.PCConfigurator.validators;
 
 import com.configurationpc.PCConfigurator.models.components.Components;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
 public interface CompabilityValidator {
 
     void validate(List<Components> components, List<String> issues);

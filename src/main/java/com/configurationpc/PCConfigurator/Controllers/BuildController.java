@@ -29,7 +29,7 @@ public class BuildController {
     }
 
     @GetMapping("/{id}")
-    public Build getBuildById(@RequestParam int id){
+    public Build getBuildById(@PathVariable int id){
         return buildService.showBuildById(id);
     }
 

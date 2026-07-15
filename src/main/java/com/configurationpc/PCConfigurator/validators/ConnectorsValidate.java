@@ -15,7 +15,7 @@ public class ConnectorsValidate implements CompabilityValidator{
         Gpu gpu = CompabilityValidator.find(components, Gpu.class);
         Psu psu = CompabilityValidator.find(components, Psu.class);
 
-        if(gpu != null || psu != null){
+        if(gpu != null && psu != null){
             String gpuConnectors = gpu.getPowerConnectors();
             String psuConnectors = psu.getAvailableConnectors();
 
