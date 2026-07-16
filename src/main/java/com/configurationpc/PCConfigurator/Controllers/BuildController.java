@@ -14,18 +14,17 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class BuildController {
 
-
     private final BuildService buildService;
 
-    @PostMapping("/create")
-    public Build createBuild(@RequestBody List<Integer> componentIds) {
-        Build newBuild = buildService.createBuild(componentIds);
+    @PostMapping("")
+    public Build create() {
+        Build newBuild = buildService.createBuild();
         return newBuild;
     }
 
-    @GetMapping("")
-    public List<Build> getBuild() {
-        return buildService.showBuild();
+    @PostMapping("/{id}/components")
+    public Build addComponent(@PathVariable int buildId, @RequestBody int componentId) {
+        return buildService.addComponents(buildId, componentId);
     }
 
     @GetMapping("/{id}")

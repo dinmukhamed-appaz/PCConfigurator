@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 @Service
@@ -26,31 +26,37 @@ public class BuildService {
     private final CheckerService checkerService;
 
 
-    public Build createBuild(List<Integer> componentIds) {
+    public Build createBuild(){
+        Build build = new Build();
+        build.setStatus(true);
+        return buildRepository.save(build);
+    }
 
-        List<Components> components = componentRepository.findAllById(componentIds);
+    public Build addComponents(int buildId, int componentId){
+        Build build = buildRepository.findById(buildId)
+                .orElseThrow(() ->
+                        new NotFoundException("Build", buildId));
 
-        List<String> issues = checkerService.check(components);
+        Components components = componentRepository.findById(componentId)
+                .orElseThrow(() ->
+                        new NotFoundException("Components", componentId));
+
+        List<Components> updatedComponents = new ArrayList<>(build.getComponents());
+        updatedComponents.add(components);
+
+        List<String> issues = checkerService.check(updatedComponents);
 
         if(!issues.isEmpty()) {
             throw new IncompatibilityIssuesException(issues);
         }
 
-        Build build = new Build();
-        build.setComponents(components);
-
-        build.setTotalPrice(checkerService.totalPrice(components));
-
-        build.setStatus(true);
-
+        build.setComponents(updatedComponents);
+        build.setTotalPrice(checkerService.totalPrice(updatedComponents));
 
         return buildRepository.save(build);
+
     }
 
-
-    public List<Build> showBuild(){
-        return buildRepository.findAll();
-    }
 
     public Build showBuildById(int id){
         return buildRepository.findById(id)
