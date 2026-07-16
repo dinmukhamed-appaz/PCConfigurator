@@ -23,8 +23,8 @@ public class BuildController {
     }
 
     @PostMapping("/{id}/components")
-    public Build addComponent(@PathVariable int buildId, @RequestBody int componentId) {
-        return buildService.addComponents(buildId, componentId);
+    public Build addComponent(@PathVariable int id, @RequestBody int componentId) {
+        return buildService.addComponents(id, componentId);
     }
 
     @GetMapping("/{id}")
