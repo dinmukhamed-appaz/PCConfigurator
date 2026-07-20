@@ -1,5 +1,7 @@
 package com.configurationpc.PCConfigurator.Serivices;
 
+import com.configurationpc.PCConfigurator.exceptions.ComponentsNotFoundException;
+import com.configurationpc.PCConfigurator.exceptions.NotIdFoundException;
 import com.configurationpc.PCConfigurator.models.components.*;
 import com.configurationpc.PCConfigurator.validators.CompabilityValidator;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,7 @@ public class CheckerService {
         List<String> issues = new ArrayList<>();
 
         if (components == null) {
-            issues.add("No component found");
+            throw new ComponentsNotFoundException("Components not found");
         }
 
 

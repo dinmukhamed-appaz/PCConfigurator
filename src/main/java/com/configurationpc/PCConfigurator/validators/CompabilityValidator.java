@@ -2,6 +2,7 @@ package com.configurationpc.PCConfigurator.validators;
 
 import com.configurationpc.PCConfigurator.models.components.Components;
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface CompabilityValidator {
@@ -16,4 +17,17 @@ public interface CompabilityValidator {
         }
         return null;
     }
+
+
+    static boolean matchesAny(String listMatch, String valueMatch) {
+        if(listMatch == null || valueMatch == null){
+            return false;
+        }
+        return Arrays.stream(listMatch.split(","))
+                .map(String::trim)
+                .anyMatch(item -> item.equals(valueMatch));
+    }
+
+
+
 }

@@ -30,7 +30,7 @@ public class SocketValidator implements CompabilityValidator {
             String cpuSocket = cpu.getSocket();
             String coolerSockets = cooler.getSupportedSockets();
 
-            if(!coolerSockets.contains(cpuSocket)){
+            if(!CompabilityValidator.matchesAny(coolerSockets, cpuSocket)){
                 issues.add("Cooler sockets and cpu sockets do not match");
             }
         }
@@ -38,7 +38,7 @@ public class SocketValidator implements CompabilityValidator {
         if(motherboard != null && cooler != null){
             String motherboardSocket = motherboard.getSocket();
             String coolerSockets = cooler.getSupportedSockets();
-            if(!coolerSockets.contains(motherboardSocket)){
+            if(!CompabilityValidator.matchesAny(coolerSockets, motherboardSocket)){
                 issues.add("Cooler sockets and motherboard sockets do not match");
             }
         }

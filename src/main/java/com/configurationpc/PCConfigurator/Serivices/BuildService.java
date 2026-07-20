@@ -1,7 +1,8 @@
 package com.configurationpc.PCConfigurator.Serivices;
 
+import com.configurationpc.PCConfigurator.exceptions.CategoryAlreadyExistException;
 import com.configurationpc.PCConfigurator.exceptions.IncompatibilityIssuesException;
-import com.configurationpc.PCConfigurator.exceptions.NotFoundException;
+import com.configurationpc.PCConfigurator.exceptions.NotIdFoundException;
 import com.configurationpc.PCConfigurator.models.Build;
 import com.configurationpc.PCConfigurator.models.components.Components;
 import com.configurationpc.PCConfigurator.repositories.BuildRepository;
@@ -25,6 +26,8 @@ public class BuildService {
 
     private final CheckerService checkerService;
 
+    private final RecommendationService recommendationService;
+
 
     public Build createBuild(){
         Build build = new Build();
@@ -32,14 +35,22 @@ public class BuildService {
         return buildRepository.save(build);
     }
 
+
     public Build addComponents(int buildId, int componentId){
         Build build = buildRepository.findById(buildId)
                 .orElseThrow(() ->
-                        new NotFoundException("Build", buildId));
+                        new NotIdFoundException("Build", buildId));
 
         Components components = componentRepository.findById(componentId)
                 .orElseThrow(() ->
-                        new NotFoundException("Components", componentId));
+                        new NotIdFoundException("Components", componentId));
+
+
+        boolean categoryAlreadyExists = build.getComponents().stream().anyMatch(currentComponent -> currentComponent.getId() == componentId);
+
+        if(categoryAlreadyExists){
+            throw new CategoryAlreadyExistException("The component of category" + components.getCategory() + "is already exists");
+        }
 
         List<Components> updatedComponents = new ArrayList<>(build.getComponents());
         updatedComponents.add(components);
@@ -57,10 +68,15 @@ public class BuildService {
 
     }
 
+    public List<String> getRecommendations(int buildId){
+        Build build = showBuildById(buildId);
+        return recommendationService.recommend(build.getComponents());
+    }
+
 
     public Build showBuildById(int id){
         return buildRepository.findById(id)
                 .orElseThrow(() ->
-                        new NotFoundException("Build", id));
+                        new NotIdFoundException("Build", id));
     }
 }

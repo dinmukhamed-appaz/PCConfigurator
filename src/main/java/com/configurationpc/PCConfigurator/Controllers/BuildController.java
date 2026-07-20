@@ -32,4 +32,9 @@ public class BuildController {
         return buildService.showBuildById(id);
     }
 
+    @GetMapping("/{id}/recommendations")
+    public List<String> getRecommendations(@PathVariable int id) {
+        return buildService.getRecommendations(id);
+    }
+
 }

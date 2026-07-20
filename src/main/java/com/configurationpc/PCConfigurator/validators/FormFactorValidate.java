@@ -15,19 +15,20 @@ public class FormFactorValidate implements CompabilityValidator{
         Gpu gpu = CompabilityValidator.find(components, Gpu.class);
         Cooler cooler = CompabilityValidator.find(components, Cooler.class);
 
-        if(casePc != null && motherboard != null && gpu != null && cooler != null){
-            String casePcForm = casePc.getSupportedFormFactors();
-            String motherboardForm = motherboard.getFormFactor();
-            int caseMaxGpu = casePc.getMaxGpuLength();
-            int caseMaxCooler = casePc.getMaxCoolerHeight();
-            int gpuLength = gpu.getLengthGpu();
-            int coolerHeight = cooler.getHeightCooler();
-
-            if(!casePcForm.contains(motherboardForm)){
+        if (casePc != null && motherboard != null) {
+            if (!CompabilityValidator.matchesAny(casePc.getSupportedFormFactors(), motherboard.getFormFactor())) {
                 issues.add("Motherboard form can not fit to case form");
-            }else if(!(coolerHeight <= caseMaxCooler)){
+            }
+        }
+
+        if (casePc != null && cooler != null) {
+            if (cooler.getHeightCooler() > casePc.getMaxCoolerHeight()) {
                 issues.add("Cooler height too big for Case");
-            }else if(!(caseMaxGpu >= gpuLength)){
+            }
+        }
+
+        if (casePc != null && gpu != null) {
+            if (gpu.getLengthGpu() > casePc.getMaxGpuLength()) {
                 issues.add("Gpu length too big for Case");
             }
         }
