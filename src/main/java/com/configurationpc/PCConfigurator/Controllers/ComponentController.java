@@ -1,7 +1,9 @@
 package com.configurationpc.PCConfigurator.Controllers;
 
-import com.configurationpc.PCConfigurator.Serivices.ComponentsService;
+import com.configurationpc.PCConfigurator.Services.ComponentsService;
+import com.configurationpc.PCConfigurator.dto.ComponentsRequestDto;
 import com.configurationpc.PCConfigurator.models.components.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,45 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/components")
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
+
 public class ComponentController {
 
-    @Autowired
-    private ComponentsService componentsService;
-
-    @PostMapping("/cpu")
-    public Cpu createComponent(@RequestBody Cpu cpu) {
-        return componentsService.createComponent(cpu);
-    }
-
-    @PostMapping("/motherboard")
-    public Motherboard createComponent(@RequestBody Motherboard motherboard) {
-        return componentsService.createComponent(motherboard);
-    }
-
-    @PostMapping("/gpu")
-    public Gpu createComponent(@RequestBody Gpu gpu) {
-        return componentsService.createComponent(gpu);
-    }
-
-    @PostMapping("/psu")
-    public Psu createComponent(@RequestBody Psu psu) {
-        return componentsService.createComponent(psu);
-    }
-
-    @PostMapping("/ram")
-    public Ram createComponent(@RequestBody Ram ram) {
-        return componentsService.createComponent(ram);
-    }
-
-    @PostMapping("/cooler")
-    public Cooler createComponent(@RequestBody Cooler cooler) {
-        return componentsService.createComponent(cooler);
-    }
-
-    @PostMapping("/case")
-    public Case createComponent(@RequestBody Case cases) {
-        return componentsService.createComponent(cases);
-    }
+    private final ComponentsService componentsService;
 
     @GetMapping("")
     public List<Components> showComponents() {
@@ -59,6 +27,22 @@ public class ComponentController {
     public Components showComponentsById(@PathVariable int id){
         return componentsService.showComponentsById(id);
     }
+
+    @PostMapping("")
+    public Components createComponent(@RequestBody ComponentsRequestDto requestDto) {
+        return componentsService.createComponent(requestDto);
+    }
+
+    @PutMapping("/{id}")
+    public Components updateComponent(@PathVariable int id, @RequestBody ComponentsRequestDto requestDto) {
+        return componentsService.updateComponent(id, requestDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public Components deleteComponent(@PathVariable int id) {
+        return componentsService.deleteComponent(id);
+    }
+
 
 
 }

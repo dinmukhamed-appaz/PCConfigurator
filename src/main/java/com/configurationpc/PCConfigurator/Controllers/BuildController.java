@@ -1,7 +1,8 @@
 package com.configurationpc.PCConfigurator.Controllers;
 
 
-import com.configurationpc.PCConfigurator.Serivices.BuildService;
+import com.configurationpc.PCConfigurator.Services.BuildService;
+import com.configurationpc.PCConfigurator.dto.ComponentsRequestDto;
 import com.configurationpc.PCConfigurator.models.Build;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,29 @@ public class BuildController {
         return buildService.showBuildById(id);
     }
 
+    @GetMapping("")
+    public List<Build> getAllBuilds() {
+        return buildService.showAllBuilds();
+    }
+
     @GetMapping("/{id}/recommendations")
     public List<String> getRecommendations(@PathVariable int id) {
         return buildService.getRecommendations(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public Build deleteBuildById(@PathVariable int id) {
+        return buildService.deleteBuildById(id);
+    }
+
+    @DeleteMapping("/{id}/component/{componentId}")
+    public Build deleteComponentBuild(@PathVariable int id, @PathVariable int componentId) {
+        return buildService.deleteComponentBuild(id, componentId);
+    }
+
+    @PutMapping("/{id}/component/{componentId}")
+    public Build updateComponentBuild(@PathVariable int id, @PathVariable int componentId, @RequestBody ComponentsRequestDto componentsRequestDto) {
+        return buildService.updateComponentBuild(id, componentId, componentsRequestDto);
     }
 
 }

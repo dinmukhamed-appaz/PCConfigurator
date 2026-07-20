@@ -54,11 +54,11 @@ public class GlobalExceptionHandler {
         ErrorResponseDto error = new ErrorResponseDto(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_GATEWAY.getReasonPhrase(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 categoryAlreadyExistException.getMessage()
         );
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_GATEWAY);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
 }

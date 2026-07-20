@@ -25,7 +25,7 @@ public interface CompabilityValidator {
         }
         return Arrays.stream(listMatch.split(","))
                 .map(String::trim)
-                .anyMatch(item -> item.equals(valueMatch));
+                .anyMatch(item -> item.equalsIgnoreCase(valueMatch));
     }
 
 

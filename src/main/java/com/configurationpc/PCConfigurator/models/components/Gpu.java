@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Gpu extends Components {
 
     @Column(nullable = false)
-    private Integer powerConsumption;
+    private int powerConsumption;
 
     @Column(nullable = false)
     private String powerConnectors;
