@@ -43,10 +43,6 @@ public class BuildController {
         return buildService.showAllBuilds();
     }
 
-    @GetMapping("/{id}/recommendations")
-    public List<String> getRecommendations(@PathVariable int id) {
-        return buildService.getRecommendations(id);
-    }
 
     @DeleteMapping("/{id}")
     public Build deleteBuildById(@PathVariable int id) {

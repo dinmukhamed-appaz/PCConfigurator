@@ -1,6 +1,7 @@
 package com.configurationpc.PCConfigurator.Services;
 
 import com.configurationpc.PCConfigurator.exceptions.ComponentsNotFoundException;
+import com.configurationpc.PCConfigurator.exceptions.RecommendationException;
 import com.configurationpc.PCConfigurator.models.components.*;
 import com.configurationpc.PCConfigurator.validators.CompabilityValidator;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,9 @@ public class CheckerService {
 
     private final List<CompabilityValidator> compabilityValidators;
 
+    private final RecommendationService recommendationService;
+
+
 
     public List<String> check(List<Components> components) {
         List<String> issues = new ArrayList<>();
@@ -28,7 +32,6 @@ public class CheckerService {
         for (CompabilityValidator validators : compabilityValidators) {
             validators.validate(components, issues);
         }
-
 
         return issues;
 

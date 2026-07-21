@@ -1,14 +1,11 @@
 package com.configurationpc.PCConfigurator.Services;
 
-import com.configurationpc.PCConfigurator.exceptions.CategoryAlreadyExistException;
-import com.configurationpc.PCConfigurator.exceptions.IncompatibilityIssuesException;
-import com.configurationpc.PCConfigurator.exceptions.NotIdFoundException;
+import com.configurationpc.PCConfigurator.exceptions.*;
 import com.configurationpc.PCConfigurator.models.Build;
 import com.configurationpc.PCConfigurator.models.components.*;
 import com.configurationpc.PCConfigurator.repositories.BuildRepository;
 import com.configurationpc.PCConfigurator.repositories.ComponentRepository;
 
-import com.configurationpc.PCConfigurator.validators.CompabilityValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,7 +55,6 @@ public class BuildService {
         updatedComponents.add(components);
 
         List<String> issues = checkerService.check(updatedComponents);
-        build.setStatus(true);
 
         if(!issues.isEmpty()) {
             throw new IncompatibilityIssuesException(issues);
@@ -66,13 +62,19 @@ public class BuildService {
 
         build.setComponents(updatedComponents);
         build.setTotalPrice(checkerService.totalPrice(updatedComponents));
+        buildRepository.save(build);
+
+        List<String> recommendations = recommendationService.recommend(updatedComponents);
+
+        if (!recommendations.isEmpty()) {
+            build.setStatus(false);
+
+            throw new RecommendationException(recommendations);
+        }
+
+        build.setStatus(true);
         return buildRepository.save(build);
 
-    }
-
-    public List<String> getRecommendations(int buildId){
-        Build build = showBuildById(buildId);
-        return recommendationService.recommend(build.getComponents());
     }
 
     public List<Build> showAllBuilds(){

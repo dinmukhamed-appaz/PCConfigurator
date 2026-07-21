@@ -21,7 +21,7 @@ public class PowerValidation implements CompabilityValidator{
             int gpuTdp = gpu.getPowerConsumption();
             int psuTdp = psu.getTotalPower();
 
-            if(psuTdp < coolerTdp + cpuTdp + gpuTdp) {
+            if(psuTdp * 1.2 < coolerTdp + cpuTdp + gpuTdp) {
                 issues.add("Psu power is not enough");
             }
 
