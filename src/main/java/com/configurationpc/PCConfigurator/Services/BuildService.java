@@ -1,15 +1,14 @@
 package com.configurationpc.PCConfigurator.Services;
 
-import com.configurationpc.PCConfigurator.dto.ComponentsRequestDto;
 import com.configurationpc.PCConfigurator.exceptions.CategoryAlreadyExistException;
 import com.configurationpc.PCConfigurator.exceptions.IncompatibilityIssuesException;
 import com.configurationpc.PCConfigurator.exceptions.NotIdFoundException;
 import com.configurationpc.PCConfigurator.models.Build;
-import com.configurationpc.PCConfigurator.models.components.Components;
+import com.configurationpc.PCConfigurator.models.components.*;
 import com.configurationpc.PCConfigurator.repositories.BuildRepository;
 import com.configurationpc.PCConfigurator.repositories.ComponentRepository;
-import com.configurationpc.PCConfigurator.dto.ComponentsRequestDto;
 
+import com.configurationpc.PCConfigurator.validators.CompabilityValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,14 +30,11 @@ public class BuildService {
 
     private final RecommendationService recommendationService;
 
-    private final ComponentCreateService componentCreateService;
-
     public Build createBuild(){
         Build build = new Build();
-        build.setStatus(true);
+        build.setStatus(false);
         return buildRepository.save(build);
     }
-
 
     public Build addComponents(int buildId, int componentId){
         Build build = buildRepository.findById(buildId)
@@ -62,6 +58,7 @@ public class BuildService {
         updatedComponents.add(components);
 
         List<String> issues = checkerService.check(updatedComponents);
+        build.setStatus(true);
 
         if(!issues.isEmpty()) {
             throw new IncompatibilityIssuesException(issues);
@@ -69,7 +66,6 @@ public class BuildService {
 
         build.setComponents(updatedComponents);
         build.setTotalPrice(checkerService.totalPrice(updatedComponents));
-
         return buildRepository.save(build);
 
     }
@@ -102,19 +98,29 @@ public class BuildService {
         return build;
     }
 
-    public Build updateComponentBuild(int buildId, int componentId, ComponentsRequestDto requestDto){
+    public Build updateComponentBuild(int buildId, int oldComponentId, int newComponentId){
         Build build = showBuildById(buildId);
         Components componentToUpdate = build.getComponents()
-                .stream().filter(component -> component.getId() == componentId)
+                .stream()
+                .filter(component -> component.getId() == oldComponentId)
                 .findFirst()
-                .orElseThrow(() -> new NotIdFoundException("Component", componentId));
+                .orElseThrow(() -> new NotIdFoundException("Component in this build", oldComponentId));
 
-        Components updated = componentCreateService.create(requestDto);
+        Components newComponent = componentRepository.findById(newComponentId)
+                .orElseThrow(() -> new NotIdFoundException("Components", newComponentId));
 
-        updated.setId(componentToUpdate.getId());
+        List<Components> updatedComponents = new ArrayList<>(build.getComponents());
+        updatedComponents.remove(componentToUpdate);
+        updatedComponents.add(newComponent);
 
-        build.getComponents().remove(componentToUpdate);
-        build.getComponents().add(updated);
+        List<String> issues = checkerService.check(updatedComponents);
+        if (!issues.isEmpty()) {
+            throw new IncompatibilityIssuesException(issues);
+        }
+
+        build.setComponents(updatedComponents);
+        build.setTotalPrice(checkerService.totalPrice(updatedComponents));
+
 
         return buildRepository.save(build);
     }

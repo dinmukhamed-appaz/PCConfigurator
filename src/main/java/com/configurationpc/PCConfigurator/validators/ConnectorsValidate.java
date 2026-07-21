@@ -20,7 +20,7 @@ public class ConnectorsValidate implements CompabilityValidator{
             String psuConnectors = psu.getAvailableConnectors();
 
 
-            if(!CompabilityValidator.matchesAny(gpuConnectors, psuConnectors)){
+            if(!CompabilityValidator.matchesAny(psuConnectors, gpuConnectors)){
                 issues.add("Gpu connector not connect to psu");
             }
         }

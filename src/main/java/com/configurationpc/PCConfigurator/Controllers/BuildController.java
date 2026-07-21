@@ -2,10 +2,13 @@ package com.configurationpc.PCConfigurator.Controllers;
 
 
 import com.configurationpc.PCConfigurator.Services.BuildService;
-import com.configurationpc.PCConfigurator.dto.ComponentsRequestDto;
+import com.configurationpc.PCConfigurator.Services.PdfGenerationService;
 import com.configurationpc.PCConfigurator.models.Build;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +19,8 @@ import java.util.List;
 public class BuildController {
 
     private final BuildService buildService;
+
+    private final PdfGenerationService pdfGenerationService;
 
     @PostMapping("")
     public Build create() {
@@ -54,8 +59,21 @@ public class BuildController {
     }
 
     @PutMapping("/{id}/component/{componentId}")
-    public Build updateComponentBuild(@PathVariable int id, @PathVariable int componentId, @RequestBody ComponentsRequestDto componentsRequestDto) {
-        return buildService.updateComponentBuild(id, componentId, componentsRequestDto);
+    public Build updateComponentBuild(@PathVariable int id, @PathVariable int componentId, @RequestBody int newComponentId) {
+        return buildService.updateComponentBuild(id, componentId, newComponentId);
+    }
+
+    @GetMapping("/{id}/pdf")
+    public ResponseEntity<byte[]> downloadPdf(@PathVariable int id) {
+        byte[] pdf = pdfGenerationService.generate(id);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=build-" + id + ".pdf"
+                )
+                .body(pdf);
     }
 
 }

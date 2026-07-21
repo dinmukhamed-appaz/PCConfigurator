@@ -17,17 +17,18 @@ public class CheckerService {
 
     private final List<CompabilityValidator> compabilityValidators;
 
+
     public List<String> check(List<Components> components) {
         List<String> issues = new ArrayList<>();
 
-        if (components == null) {
+        if(components == null) {
             throw new ComponentsNotFoundException("Components not found");
         }
-
 
         for (CompabilityValidator validators : compabilityValidators) {
             validators.validate(components, issues);
         }
+
 
         return issues;
 

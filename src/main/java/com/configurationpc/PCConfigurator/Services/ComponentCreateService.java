@@ -34,8 +34,9 @@ public class ComponentCreateService {
 
     private Gpu buildGpu(ComponentsRequestDto requestDto) {
         Gpu gpu = new Gpu();
+
         gpu.setPowerConsumption(requestDto.getPowerConsumption());
-        gpu.setPowerConnectors(requestDto.getAvailableConnectors());
+        gpu.setPowerConnectors(requestDto.getPowerConnectors());
         gpu.setLengthGpu(requestDto.getLengthGpu());
 
         return gpu;
