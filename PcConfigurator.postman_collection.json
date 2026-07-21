@@ -1,0 +1,232 @@
+{
+  "info": {
+    "_postman_id": "dd5413f8-b427-4780-8f27-e8c4a667f950",
+    "name": "PcConfigurator",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51735939",
+    "_collection_link": "https://go.postman.co/collection/51735939-dd5413f8-b427-4780-8f27-e8c4a667f950?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "ComponentCreation",
+      "item": [
+        {
+          "name": "Сpu",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"AMD Ryzen 5 7600X\",\r\n  \"category\": \"Cpu\",\r\n  \"price\": 249.99,\r\n  \"socket\": \"AM5\",\r\n  \"tdp\": 105\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/components",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "components"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Gpu",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"NVIDIA RTX 4070\",\r\n  \"category\": \"Gpu\",\r\n  \"price\": 599.99,\r\n  \"powerConsumption\": 200,\r\n  \"powerConnectors\": \"8pin\",\r\n  \"lengthGpu\": 285\r\n  \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/components",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "components"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Motherboard",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"ASUS ROG STRIX B650-A\",\r\n  \"category\": \"Motherboard\",\r\n  \"price\": 219.99,\r\n  \"socket\": \"AM5\",\r\n  \"ramType\": \"DDR5\",\r\n  \"formFactor\": \"ATX\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/components",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "components"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ram",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Corsair Vengeance 32GB\",\r\n  \"category\": \"Ram\",\r\n  \"price\": 89.99,\r\n  \"ramType\": \"DDR5\",\r\n  \"memory\": 32\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/components",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "components"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Psu",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Corsair RM750x\",\r\n  \"category\": \"Psu\",\r\n  \"price\": 129.99,\r\n  \"totalPower\": 750,\r\n  \"availableConnectors\": \"8pin,6pin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/components",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "components"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cooler",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Noctua NH-D15\",\r\n  \"category\": \"Cooler\",\r\n  \"price\": 99.99,\r\n  \"supportedSockets\": \"AM5,AM4,LGA1700\",\r\n  \"maxTdp\": 220,\r\n  \"heightCooler\": 165\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/components",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "components"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Case",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"NZXT H510\",\r\n  \"category\": \"Case\",\r\n  \"price\": 79.99,\r\n  \"supportedFormFactor\": \"ATX,mATX\",\r\n  \"maxGpuLength\": 300,\r\n  \"maxCoolerHeight\": 170\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/components",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "components"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Build",
+      "item": [
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
