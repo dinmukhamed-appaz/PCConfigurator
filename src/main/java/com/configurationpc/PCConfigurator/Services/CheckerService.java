@@ -18,9 +18,6 @@ public class CheckerService {
 
     private final List<CompabilityValidator> compabilityValidators;
 
-    private final RecommendationService recommendationService;
-
-
 
     public List<String> check(List<Components> components) {
         List<String> issues = new ArrayList<>();

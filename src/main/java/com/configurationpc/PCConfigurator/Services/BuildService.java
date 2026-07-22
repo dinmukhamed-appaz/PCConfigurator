@@ -68,7 +68,6 @@ public class BuildService {
 
         if (!recommendations.isEmpty()) {
             build.setStatus(false);
-
             throw new RecommendationException(recommendations);
         }
 
